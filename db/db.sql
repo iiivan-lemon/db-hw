@@ -83,7 +83,7 @@ CREATE INDEX index_posts_id on posts USING HASH (id);
 CREATE INDEX index_posts_thread_id on posts (thread, id);
 CREATE INDEX index_posts_thread_parent_path on posts (thread, parent, path);
 CREATE INDEX index_posts_path1_path on posts ((path[1]), path);
--- CLUSTER posts USING index_posts_thread_parent_path;
+
 
 CREATE UNLOGGED TABLE Forum_user (
     forum_slug CITEXT NOT NULL,
@@ -93,7 +93,7 @@ CREATE UNLOGGED TABLE Forum_user (
 
 CREATE UNIQUE INDEX idx_forum_users_slug ON forum_user(forum_slug, nickname);
 CREATE INDEX index_forum_user_nickname ON forum_user USING HASH (nickname);
--- CLUSTER forum_user USING idx_forum_users_slug;
+
 
 CREATE OR REPLACE FUNCTION add_forum_user()
     RETURNS TRIGGER AS
@@ -155,7 +155,7 @@ CREATE UNLOGGED TABLE IF NOT EXISTS Thread_vote (
 CREATE UNIQUE INDEX index_votes ON thread_vote (thread_id, nickname);
 
 ALTER TABLE ONLY Thread_vote ADD CONSTRAINT votes_user_thread_unique UNIQUE (nickname, thread_id);
--- CLUSTER Thread_vote USING votes_user_thread_unique;
+
 
 
 CREATE OR REPLACE FUNCTION vote_insert()
