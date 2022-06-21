@@ -16,15 +16,16 @@ func NewForumRepository(db *pgxpool.Pool) *ForumRepo {
 }
 
 const CreateForumQuery = `INSERT INTO forums (slug, title, user_nickname) VALUES($1, $2, $3)`
+
 func (f *ForumRepo) CreateForum(forumInput *entity.Forum) error {
-	_, err := f.db.Exec(context.Background(), CreateForumQuery, forumInput.Slug, forumInput.Title,	forumInput.User)
+	_, err := f.db.Exec(context.Background(), CreateForumQuery, forumInput.Slug, forumInput.Title, forumInput.User)
 	return err
 }
 
 const GetForumDetailsQuery = `SELECT slug, title, user_nickname, thread_count, post_count FROM forums WHERE slug = $1`
+
 func (f *ForumRepo) GetForumDetails(slug string) (*entity.Forum, error) {
 	forum := &entity.Forum{}
-
 	err := f.db.QueryRow(context.Background(), GetForumDetailsQuery, slug).Scan(
 		&forum.Slug,
 		&forum.Title,
@@ -88,6 +89,7 @@ func (f *ForumRepo) GetForumUsers(slug string, limit int32, since string, order 
 }
 
 const CheckForumQuery = `SELECT slug FROM forums WHERE slug = $1`
+
 func (f *ForumRepo) CheckForum(slug string) (string, error) {
 	err := f.db.QueryRow(context.Background(), CheckForumQuery, slug).Scan(&slug)
 

@@ -29,7 +29,7 @@ CREATE UNLOGGED TABLE IF NOT EXISTS forums (
     user_nickname  CITEXT      NOT NULL
 );
 
-CREATE INDEX index_forums ON forums (slug, title, user_nickname, post_count, thread_count);
+CREATE INDEX index_forums ON forums (slug);
 CREATE INDEX index_forums_slug_hash ON forums USING HASH (slug);
 CREATE INDEX index_forums_users_foreign ON forums USING HASH (user_nickname);
 CREATE INDEX index_forums_id_hash ON forums USING HASH (id);
