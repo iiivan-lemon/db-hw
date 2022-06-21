@@ -154,7 +154,6 @@ CREATE UNLOGGED TABLE IF NOT EXISTS Thread_vote (
 
 CREATE UNIQUE INDEX index_votes ON thread_vote (thread_id, nickname);
 
-ALTER TABLE ONLY Thread_vote ADD CONSTRAINT votes_user_thread_unique UNIQUE (nickname, thread_id);
 
 
 
@@ -169,6 +168,7 @@ END;
 $vote_insert$  LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS vote_insert ON Thread_vote;
+
 CREATE TRIGGER vote_insert AFTER INSERT ON Thread_vote FOR EACH ROW EXECUTE PROCEDURE vote_insert();
 
 
